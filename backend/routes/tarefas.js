@@ -81,4 +81,44 @@ router.post('/', function (request, response, next) {
     .catch(next);
 });
 
+
+
+router.put('/:tarefa_id', function (request, response, next) {
+    let tarefaId = request.params.tarefa_id;
+
+    let body = request.body;
+    let tarefa = {
+        titulo: body.titulo,
+        descricao: body.descricao
+    };
+
+    Tarefa.update(tarefa, {
+        where: {
+            id: tarefaId
+        }
+    })
+    .then((linhasAfetadas) => {
+        if (linhasAfetadas < 1) {
+            response.status(404)
+                .json({
+                    mensagem: 'A tarefa não existe'
+                });
+            
+            return;
+        }
+
+        // Encontra a tarefa que acabamos de atualizar
+        return Tarefa.findOne({
+            where: {
+                id: tarefaId
+            }
+        });
+    })
+    .then((tarefa) => {
+        response.status(200)
+            .json(tarefa);
+    })
+    .catch(next);
+});
+
 module.exports = router;
