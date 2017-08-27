@@ -121,4 +121,60 @@ router.put('/:tarefa_id', function (request, response, next) {
     .catch(next);
 });
 
+router.put('/:tarefa_id/concluida', function (request, response, next) {
+    let tarefaId = request.params.tarefa_id;
+    let tarefa = {
+        concluida: true
+    };
+
+    Tarefa.update(tarefa, {
+        where: {
+            id: tarefaId
+        }
+    })
+    .then((linhasAfetadas) => {
+        if (linhasAfetadas < 1) {
+            response.status(404)
+                .json({
+                    mensagem: 'A tarefa não existe'
+                });
+            
+            return;
+        }
+
+        response.status(204)
+            .send();
+    })
+    .catch(next);
+});
+
+
+
+router.delete('/:tarefa_id/concluida', function (request, response, next) {
+    let tarefaId = request.params.tarefa_id;
+    let tarefa = {
+        concluida: false
+    };
+
+    Tarefa.update(tarefa, {
+        where: {
+            id: tarefaId
+        }
+    })
+    .then((linhasAfetadas) => {
+        if (linhasAfetadas < 1) {
+            response.status(404)
+                .json({
+                    mensagem: 'A tarefa não existe'
+                });
+            
+            return;
+        }
+
+        response.status(204)
+            .send();
+    })
+    .catch(next);
+});
+
 module.exports = router;
