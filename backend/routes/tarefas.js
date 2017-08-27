@@ -6,6 +6,8 @@ const {
     Tarefa
 } = require('../models');
 
+
+
 router.get('/', function (request, response, next) {
     let where = {};
     let query = request.query;
@@ -31,6 +33,32 @@ router.get('/', function (request, response, next) {
     .catch((ex) => {
         next(ex);
     });
+});
+
+
+
+router.get('/:tarefa_id', function (request, response, next) {
+    let tarefaId = request.params.tarefa_id;
+
+    Tarefa.findOne({
+        where: {
+            id: tarefaId
+        }
+    })
+    .then((tarefa) => {
+        if (!tarefa) {
+            response.status(404)
+                .json({
+                    mensagem: 'A tarefa não existe'
+                });
+            
+            return;
+        }
+
+        response.status(200)
+            .json(tarefa);
+    })
+    .catch(next);
 });
 
 module.exports = router;
