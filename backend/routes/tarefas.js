@@ -74,9 +74,9 @@ router.post('/', function (request, response, next) {
     tarefa.concluida = false;
 
     Tarefa.create(tarefa)
-    .then(() => {
+    .then((tarefa) => {
         response.status(201)
-            .send();
+            .json(tarefa);
     })
     .catch(next);
 });
