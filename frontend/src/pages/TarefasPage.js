@@ -57,16 +57,18 @@ class TarefaPage extends Component {
     }
 
     onExcluirClick = (tarefaId) => {
-        axios.delete('http://localhost:3001/tarefas/' + tarefaId)
-            .then((response) => {
-                if (response.status === 204) {
-                    return this.requestTarefas(this.textSearch);
-                } else {
-                    console.warn(response);
-                }
-            }).catch((ex) => {
-                console.warn(ex);
-            })
+        if (window.confirm(`Deseja excluir a tarefa ${tarefaId}?`) === true) {
+            axios.delete('http://localhost:3001/tarefas/' + tarefaId)
+                .then((response) => {
+                    if (response.status === 204) {
+                        return this.requestTarefas(this.textSearch);
+                    } else {
+                        console.warn(response);
+                    }
+                }).catch((ex) => {
+                    console.warn(ex);
+                })
+        }
     }
 
     saveTarefa = (tarefa) => {
