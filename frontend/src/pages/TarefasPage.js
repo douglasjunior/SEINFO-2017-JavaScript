@@ -110,6 +110,29 @@ class TarefaPage extends Component {
             })
     }
 
+    onConcluidaChange = (tarefaId, concluida) => {
+
+        let method;
+        if (concluida) {
+            method = axios.put;
+        } else {
+            method = axios.delete;
+        }
+
+        method('http://localhost:3001/tarefas/' + tarefaId + "/concluida")
+            .then((response) => {
+                if (response.status === 204) {
+                    const { tarefas } = this.state;
+                    _.find(tarefas, { id: tarefaId }).concluida = concluida;
+                    this.setState({ showForm: false, tarefas });
+                } else {
+                    console.warn(response);
+                }
+            }).catch((ex) => {
+                console.warn(ex);
+            })
+    }
+
     render() {
         const { tarefas, showForm, tarefaSelecionada } = this.state;
         const closeForm = () => this.setState({ showForm: false });
@@ -122,7 +145,7 @@ class TarefaPage extends Component {
                     onClick={() => this.setState({ showForm: true, tarefaSelecionada: {} })}>Nova</Button>
 
                 <TarefaList tarefas={tarefas} onEditarClick={this.onEditarClick}
-                    onExcluirClick={this.onExcluirClick} />
+                    onExcluirClick={this.onExcluirClick} onConcluidaChange={this.onConcluidaChange} />
 
                 <TarefaForm container={this} show={showForm} onHide={closeForm}
                     onSave={this.saveTarefa} tarefa={tarefaSelecionada} />

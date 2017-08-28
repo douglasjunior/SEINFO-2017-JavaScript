@@ -11,20 +11,23 @@ class TarefaSearch extends Component {
         this.searchValue = event.target.value;
     }
 
-    onSearchClick = () => {
+    onSearchSubmit = (event) => {
+        event.preventDefault();
         this.props.onSearchClick(this.searchValue);
     }
 
     render() {
         return (
-            <FormGroup>
-                <InputGroup>
-                    <FormControl type="text" onChange={this.onChangeText} />
-                    <InputGroup.Button>
-                        <Button onClick={this.onSearchClick}>Buscar</Button>
-                    </InputGroup.Button>
-                </InputGroup>
-            </FormGroup>
+            <form onSubmit={this.onSearchSubmit}>
+                <FormGroup>
+                    <InputGroup>
+                        <FormControl type="text" onChange={this.onChangeText} />
+                        <InputGroup.Button>
+                            <Button type="submit">Buscar</Button>
+                        </InputGroup.Button>
+                    </InputGroup>
+                </FormGroup>
+            </form>
         )
     }
 }

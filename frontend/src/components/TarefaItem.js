@@ -6,8 +6,16 @@ import {
 } from 'react-bootstrap';
 
 class TarefaItem extends Component {
+
+    onConcluidaChange = (toggleValues) => {
+        if (toggleValues && toggleValues.length > 0) {
+            const { id, onConcluidaChange } = this.props;
+            onConcluidaChange(id, toggleValues[1]);
+        }
+    }
+
     render() {
-        const { id, titulo, data_criacao, concluida, onConcluidaChange, onExcluirClick, onEditarClick } = this.props;
+        const { id, titulo, data_criacao, concluida, onExcluirClick, onEditarClick } = this.props;
         return (
             <tr>
                 <td>{id}</td>
@@ -17,7 +25,7 @@ class TarefaItem extends Component {
                     <ToggleButtonGroup
                         type="checkbox" bsSize="small"
                         value={concluida}
-                        onChange={onConcluidaChange}
+                        onChange={this.onConcluidaChange}
                     >
                         <ToggleButton value={false}>Pendene</ToggleButton>
                         <ToggleButton value={true}>Concluída</ToggleButton>

@@ -47,15 +47,15 @@ class TarefaForm extends Component {
                 <Modal.Body>
                     <FormGroup >
                         <ControlLabel>#</ControlLabel>
-                        <FormControl type="text" disabled value={id} />
+                        <FormControl type="text" disabled value={id || ''} />
                     </FormGroup>
                     <FormGroup >
                         <ControlLabel>Título</ControlLabel>
-                        <FormControl type="text" value={titulo} onChange={this.onTituloChange} />
+                        <FormControl type="text" value={titulo || ''} onChange={this.onTituloChange} />
                     </FormGroup>
                     <FormGroup>
                         <ControlLabel>Descrição</ControlLabel>
-                        <FormControl componentClass="textarea" value={descricao} onChange={this.onDescricaoChange} />
+                        <FormControl componentClass="textarea" value={descricao || ''} onChange={this.onDescricaoChange} />
                     </FormGroup>
                 </Modal.Body>
                 <Modal.Footer>
