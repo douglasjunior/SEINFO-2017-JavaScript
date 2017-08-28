@@ -1,20 +1,12 @@
 import React, { Component } from 'react';
 
+import _ from 'lodash';
 import axios from 'axios';
-//import { } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 import TarefaList from '../components/TarefaList';
-
-const TAREFAS = [
-    { id: 1, titulo: "Título", descricao: "desc", data_criacao: "17/05/1989", concluida: true },
-    { id: 1, titulo: "Título", descricao: "desc", data_criacao: "17/05/1989", concluida: false },
-    { id: 1, titulo: "Título", descricao: "desc", data_criacao: "17/05/1989", concluida: false },
-    { id: 1, titulo: "Título", descricao: "desc", data_criacao: "17/05/1989", concluida: true },
-    { id: 1, titulo: "Título", descricao: "desc", data_criacao: "17/05/1989", concluida: false },
-    { id: 1, titulo: "Título", descricao: "desc", data_criacao: "17/05/1989", concluida: true },
-    { id: 1, titulo: "Título", descricao: "desc", data_criacao: "17/05/1989", concluida: true },
-    { id: 1, titulo: "Título", descricao: "desc", data_criacao: "17/05/1989", concluida: false },
-]
+import TarefaSearch from '../components/TarefaSearch';
+import TarefaForm from '../components/TarefaForm';
 
 class TarefaPage extends Component {
 
@@ -23,19 +15,116 @@ class TarefaPage extends Component {
     }
 
     componentDidMount() {
-        axios.get('http://192.168.100.5:3000/tarefas')
+        this.requestTarefas();
+    }
+
+    requestTarefas = (searchValue = '') => {
+        return axios.get('http://localhost:3001/tarefas', {
+            params: {
+                titulo: searchValue
+            }
+        }).then((response) => {
+            if (response.status === 200) {
+                const { dados, total } = response.data;
+                this.setState({ tarefas: dados, total: total, });
+            } else {
+                console.warn(response);
+            }
+        }).catch((ex) => {
+            console.warn(ex);
+        })
+    }
+
+    onSearchClick = (value) => {
+        this.textSearch = value;
+        this.requestTarefas(value);
+    }
+
+    onEditarClick = (tarefaId) => {
+        axios.get('http://localhost:3001/tarefas/' + tarefaId)
             .then((response) => {
-                this.setState({ tarefas: response.data.dados });
+                if (response.status === 200) {
+                    this.setState({
+                        tarefaSelecionada: response.data,
+                        showForm: true,
+                    });
+                } else {
+                    console.warn(response);
+                }
+            }).catch((ex) => {
+                console.warn(ex);
+            })
+    }
+
+    onExcluirClick = (tarefaId) => {
+        axios.delete('http://localhost:3001/tarefas/' + tarefaId)
+            .then((response) => {
+                if (response.status === 204) {
+                    return this.requestTarefas(this.textSearch);
+                } else {
+                    console.warn(response);
+                }
+            }).catch((ex) => {
+                console.warn(ex);
+            })
+    }
+
+    saveTarefa = (tarefa) => {
+        if (!tarefa.id) {
+            this.newTarefa(tarefa);
+        } else {
+            this.updateTarefa(tarefa);
+        }
+    }
+
+    newTarefa = (tarefa) => {
+        axios.post('http://localhost:3001/tarefas/', tarefa)
+            .then((response) => {
+                if (response.status === 201) {
+                    const { tarefas } = this.state;
+                    tarefas.unshift(response.data);
+                    this.setState({ showForm: false, tarefas });
+                } else {
+                    console.warn(response);
+                }
+            }).catch((ex) => {
+                console.warn(ex);
+            })
+    }
+
+    updateTarefa = (tarefa) => {
+        axios.put('http://localhost:3001/tarefas/' + tarefa.id, tarefa)
+            .then((response) => {
+                if (response.status === 200) {
+                    const { tarefas } = this.state;
+                    _.remove(tarefas, { id: tarefa.id });
+                    tarefas.unshift(response.data);
+                    this.setState({ showForm: false, tarefas });
+                } else {
+                    console.warn(response);
+                }
             }).catch((ex) => {
                 console.warn(ex);
             })
     }
 
     render() {
-
+        const { tarefas, showForm, tarefaSelecionada } = this.state;
+        const closeForm = () => this.setState({ showForm: false });
         return (
-            <section>
-                <TarefaList tarefas={this.state.tarefas} />
+            <section style={{ padding: 16 }}>
+
+                <TarefaSearch onSearchClick={this.onSearchClick} />
+
+                <Button bsStyle="success"
+                    onClick={() => this.setState({ showForm: true, tarefaSelecionada: {} })}>Nova</Button>
+
+                <TarefaList tarefas={tarefas} onEditarClick={this.onEditarClick}
+                    onExcluirClick={this.onExcluirClick} />
+
+                <TarefaForm container={this} show={showForm} onHide={closeForm}
+                    onSave={this.saveTarefa} tarefa={tarefaSelecionada} />
+
             </section>
         )
     }

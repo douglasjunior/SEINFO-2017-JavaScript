@@ -7,7 +7,7 @@ import {
 
 class TarefaItem extends Component {
     render() {
-        const { id, titulo, data_criacao, concluida, onConcluidaChange, onVerClick, onExcluirClick, onEditarClick } = this.props;
+        const { id, titulo, data_criacao, concluida, onConcluidaChange, onExcluirClick, onEditarClick } = this.props;
         return (
             <tr>
                 <td>{id}</td>
@@ -25,9 +25,8 @@ class TarefaItem extends Component {
                 </td>
                 <td>
                     <ButtonGroup bsSize="small">
-                        <Button onClick={onVerClick} bsStyle="success">Ver</Button>
-                        <Button onClick={onEditarClick} bsStyle="warning">Editar</Button>
-                        <Button onClick={onExcluirClick} bsStyle="danger">Excluir</Button>
+                        <Button onClick={() => onEditarClick(id)} bsStyle="warning">Editar</Button>
+                        <Button onClick={() => onExcluirClick(id)} bsStyle="danger">Excluir</Button>
                     </ButtonGroup>
                 </td>
             </tr>
