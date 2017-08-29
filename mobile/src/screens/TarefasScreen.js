@@ -8,6 +8,7 @@ import {
 import axios from 'axios';
 
 import TarefaSearch from '../components/TarefaSearch';
+import TarefaList from '../components/TarefaList';
 
 export default class TarefasScreen extends Component {
 
@@ -22,6 +23,10 @@ export default class TarefasScreen extends Component {
     onSearchClick = (value) => {
         this.textSearch = value;
         this.requestTarefas(value);
+    }
+
+    onItemClick = (item) => {
+
     }
 
     requestTarefas = (searchValue = '') => {
@@ -45,6 +50,16 @@ export default class TarefasScreen extends Component {
         return (
             <View style={styles.container}>
                 <TarefaSearch onSearchClick={this.onSearchClick} />
+
+                <View style={{
+                    height: 1,
+                    marginTop: 20,
+                    backgroundColor: '#ccc'
+                }} />
+
+                <TarefaList
+                    dataSource={this.state.tarefas}
+                    onItemClick={this.onItemClick} />
             </View>
         );
     }

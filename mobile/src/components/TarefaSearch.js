@@ -45,7 +45,6 @@ export default class TarefaSearch extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        width: '100%',
         flexDirection: 'row',
         backgroundColor: '#F5FCFF',
     },
