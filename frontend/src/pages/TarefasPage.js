@@ -19,7 +19,7 @@ class TarefaPage extends Component {
     }
 
     requestTarefas = (searchValue = '') => {
-        return axios.get('http://localhost:3001/tarefas', {
+        return axios.get('/tarefas', {
             params: {
                 titulo: searchValue
             }
@@ -41,7 +41,7 @@ class TarefaPage extends Component {
     }
 
     onEditarClick = (tarefaId) => {
-        axios.get('http://localhost:3001/tarefas/' + tarefaId)
+        axios.get('/tarefas/' + tarefaId)
             .then((response) => {
                 if (response.status === 200) {
                     this.setState({
@@ -58,7 +58,7 @@ class TarefaPage extends Component {
 
     onExcluirClick = (tarefaId) => {
         if (window.confirm(`Deseja excluir a tarefa ${tarefaId}?`) === true) {
-            axios.delete('http://localhost:3001/tarefas/' + tarefaId)
+            axios.delete('/tarefas/' + tarefaId)
                 .then((response) => {
                     if (response.status === 204) {
                         return this.requestTarefas(this.textSearch);
@@ -80,7 +80,7 @@ class TarefaPage extends Component {
     }
 
     newTarefa = (tarefa) => {
-        axios.post('http://localhost:3001/tarefas/', tarefa)
+        axios.post('/tarefas/', tarefa)
             .then((response) => {
                 if (response.status === 201) {
                     const { tarefas } = this.state;
@@ -95,7 +95,7 @@ class TarefaPage extends Component {
     }
 
     updateTarefa = (tarefa) => {
-        axios.put('http://localhost:3001/tarefas/' + tarefa.id, tarefa)
+        axios.put('/tarefas/' + tarefa.id, tarefa)
             .then((response) => {
                 if (response.status === 200) {
                     const { tarefas } = this.state;
@@ -119,7 +119,7 @@ class TarefaPage extends Component {
             method = axios.delete;
         }
 
-        method('http://localhost:3001/tarefas/' + tarefaId + "/concluida")
+        method('/tarefas/' + tarefaId + "/concluida")
             .then((response) => {
                 if (response.status === 204) {
                     const { tarefas } = this.state;
