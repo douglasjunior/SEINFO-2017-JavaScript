@@ -12,7 +12,7 @@ export default class TarefaSearch extends Component {
     state = {
         value: ''
     };
-    
+
     onChangeText = (value) => {
         this.searchValue = value;
         this.setState({
@@ -34,7 +34,7 @@ export default class TarefaSearch extends Component {
                     onChangeText={this.onChangeText}
                     onSubmitEditing={this.onSearchSubmit}
                     returnKeyType='search' />
-                
+
                 <Button
                     title='Buscar'
                     onPress={this.onSearchSubmit} />
@@ -47,6 +47,8 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
         backgroundColor: '#F5FCFF',
+        paddingHorizontal: 16,
+        paddingVertical: 8,
     },
 
     textInput: {

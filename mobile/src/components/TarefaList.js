@@ -4,41 +4,42 @@ import {
     FlatList,
     TouchableOpacity,
     View,
-    Text
+    Text,
+    RefreshControl,
 } from 'react-native';
+
+import TarefaItem from './TarefaItem';
 
 export default class TarefaList extends Component {
 
-    onItemPress = (item) => {
-        this.props.onItemClick(item);
-    }
-
     renderItem = (record) => {
         const { item, index } = record;
+        const { onEditarPress, onExcluirPress, onConcluidaChange } = this.props;
         return (
-            <TouchableOpacity
-                onPress={() => this.onItemPress(item)}>
-
-                <View 
-                    style={{
-                        padding: 10
-                    }}>
-                    <Text>{item.titulo}</Text>
-                </View>
-            </TouchableOpacity>
+            <TarefaItem tarefa={item} onEditarPress={onEditarPress}
+                onExcluirPress={onExcluirPress} onConcluidaChange={onConcluidaChange} />
         );
     }
 
     render() {
+        const { refreshing, onRefresh } = this.props;
         return (
             <FlatList
+                style={styles.list}
                 data={this.props.dataSource}
                 renderItem={this.renderItem}
-                keyExtractor={(item) => item.id} />
+                keyExtractor={(item) => item.id}
+                refreshControl={<RefreshControl
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                />}
+            />
         );
     }
 }
 
-// const styles = StyleSheet.create({
-    
-// });
+const styles = StyleSheet.create({
+    list: {
+        flex: 1
+    }
+})

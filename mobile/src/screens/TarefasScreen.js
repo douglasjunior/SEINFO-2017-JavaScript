@@ -3,17 +3,20 @@ import {
     StyleSheet,
     Text,
     View,
-    ToastAndroid
+    Button,
 } from 'react-native';
 import axios from 'axios';
 
+import Divider from '../components/Divider';
 import TarefaSearch from '../components/TarefaSearch';
 import TarefaList from '../components/TarefaList';
 
 export default class TarefasScreen extends Component {
 
     state = {
-        tarefas: []
+        tarefas: [],
+        refreshing: false,
+        showForm: false,
     };
 
     componentDidMount() {
@@ -25,11 +28,9 @@ export default class TarefasScreen extends Component {
         this.requestTarefas(value);
     }
 
-    onItemClick = (item) => {
-
-    }
-
     requestTarefas = (searchValue = '') => {
+        this.setState({ refreshing: true });
+
         return axios.get('/tarefas', {
             params: {
                 titulo: searchValue
@@ -43,23 +44,42 @@ export default class TarefasScreen extends Component {
             }
         }).catch((ex) => {
             console.warn(ex);
-        });
+        }).finally(() => {
+            this.setState({ refreshing: false });
+        })
+    }
+
+    onEditarPress = (tarefa) => {
+
+    }
+
+    onExcluirPress = (tarefa) => {
+
+    }
+
+    onConcluidaChange = (tarefa, concluida) => {
+        
     }
 
     render() {
+        const { tarefas, refreshing } = this.state;
         return (
             <View style={styles.container}>
                 <TarefaSearch onSearchClick={this.onSearchClick} />
 
-                <View style={{
-                    height: 1,
-                    marginTop: 20,
-                    backgroundColor: '#ccc'
-                }} />
+                <Divider style={styles.divider} />
 
                 <TarefaList
-                    dataSource={this.state.tarefas}
-                    onItemClick={this.onItemClick} />
+                    dataSource={tarefas}
+                    refreshing={refreshing}
+                    onRefresh={() => this.requestTarefas(this.textSearch)}
+                    onEditarPress={this.onEditarPress}
+                    onExcluirPress={this.onExcluirPress}
+                    onConcluidaChange={this.onConcluidaChange} />
+
+                <Button
+                    title='Nova Tarefa'
+                    onPress={() => this.setState({ showForm: true })} />
             </View>
         );
     }
@@ -68,7 +88,9 @@ export default class TarefasScreen extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 10,
         backgroundColor: '#F5FCFF',
+    },
+    divider: {
+        marginVertical: 8,
     }
 });

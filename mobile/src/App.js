@@ -15,7 +15,7 @@ import axios from 'axios';
 
 import TarefasScreen from './screens/TarefasScreen';
 
-axios.defaults.baseURL = 'http://192.168.15.99:3001/';
+axios.defaults.baseURL = 'http://192.168.100.4:3001/';
 
 export default class App extends Component {
     render() {
