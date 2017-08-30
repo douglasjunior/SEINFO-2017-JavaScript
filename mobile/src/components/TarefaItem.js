@@ -5,18 +5,27 @@ import {
     Switch,
 } from 'react-native';
 
+import moment from 'moment';
+
 import Divider from './Divider';
 
 export default class TarefaItem extends Component {
 
     render() {
-        const { tarefa, onEditarPress, onExcluirPress, onConcluidaChange } = this.props;
+        const { id, titulo, data_criacao, concluida, onEditarPress, onExcluirPress, onConcluidaChange } = this.props;
         return (
-            <TouchableOpacity onPress={() => onEditarPress(tarefa.id)} onLongPress={() => onExcluirPress(tarefa.id)}>
+            <TouchableOpacity onPress={() => onEditarPress(id)} onLongPress={() => onExcluirPress(id)}>
                 <View style={styles.container}>
 
+                    <View style={styles.header}>
+                        <Text style={styles.label}># {id}</Text>
+                        <Text style={[styles.label, { flex: 1, textAlign: 'right' }]}>{moment(data_criacao).format('DD/MM/YYYY HH:mm')}</Text>
+                    </View>
+
+                    <Divider />
+
                     <View style={styles.body}>
-                        <Text style={styles.titulo}>{tarefa.titulo}</Text>
+                        <Text style={styles.titulo}>{titulo}</Text>
                     </View>
 
                     <Divider />
@@ -24,7 +33,7 @@ export default class TarefaItem extends Component {
                     <View style={styles.footer}>
                         <Text style={styles.label}>Concluída</Text>
 
-                        <Switch value={tarefa.concluida} onValueChange={(value) => onConcluidaChange(tarefa, value)} />
+                        <Switch value={concluida} onValueChange={(value) => onConcluidaChange(id, value)} />
                     </View>
 
                 </View>
@@ -38,10 +47,17 @@ const styles = StyleSheet.create({
         marginHorizontal: 16,
         marginVertical: 8,
         elevation: 2,
-        backgroundColor: '#fff'
+        backgroundColor: '#fff',
+        borderRadius: 2,
     },
     body: {
         padding: 16,
+    },
+    header: {
+        paddingHorizontal: 16,
+        paddingVertical: 8,
+        flexDirection: 'row',
+        alignItems: 'center',
     },
     footer: {
         paddingHorizontal: 16,

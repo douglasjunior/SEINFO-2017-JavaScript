@@ -7,6 +7,8 @@ import {
     Button
 } from 'react-native';
 
+import Styles from '../values/Styles';
+
 export default class TarefaSearch extends Component {
 
     state = {
@@ -28,7 +30,7 @@ export default class TarefaSearch extends Component {
         return (
             <View style={styles.container}>
                 <TextInput
-                    style={styles.textInput}
+                    style={[Styles.textInput, { flex: 1, marginRight: 8 }]}
                     underlineColorAndroid='transparent'
                     value={this.state.value}
                     onChangeText={this.onChangeText}
@@ -50,14 +52,4 @@ const styles = StyleSheet.create({
         paddingHorizontal: 16,
         paddingVertical: 8,
     },
-
-    textInput: {
-        flex: 1,
-        padding: 6,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        borderRadius: 2,
-        marginRight: 5,
-        backgroundColor: '#fff'
-    }
 });

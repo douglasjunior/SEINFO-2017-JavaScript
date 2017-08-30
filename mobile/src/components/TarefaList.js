@@ -16,7 +16,7 @@ export default class TarefaList extends Component {
         const { item, index } = record;
         const { onEditarPress, onExcluirPress, onConcluidaChange } = this.props;
         return (
-            <TarefaItem tarefa={item} onEditarPress={onEditarPress}
+            <TarefaItem {...item} onEditarPress={onEditarPress}
                 onExcluirPress={onExcluirPress} onConcluidaChange={onConcluidaChange} />
         );
     }

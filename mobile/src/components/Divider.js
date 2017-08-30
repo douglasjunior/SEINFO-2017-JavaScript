@@ -13,12 +13,12 @@ const Divider = (props) => {
 const styles = StyleSheet.create({
     dividerHorizontal: {
         height: 1,
-        backgroundColor: '#ccc',
+        backgroundColor: '#ddd',
         width: '100%',
     },
     dividerVertical: {
         width: 1,
-        backgroundColor: '#ccc',
+        backgroundColor: '#ddd',
         height: '100%',
     },
 });
