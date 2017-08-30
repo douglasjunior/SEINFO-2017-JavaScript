@@ -56,23 +56,6 @@ class TarefaPage extends Component {
             })
     }
 
-    onExcluirClick = (tarefaId) => {
-        if (window.confirm(`Deseja excluir a tarefa ${tarefaId}?`) === true) {
-            axios.delete('/tarefas/' + tarefaId)
-                .then((response) => {
-                    if (response.status === 204) {
-                        const { tarefas } = this.state;
-                        _.remove(tarefas, { id: tarefaId });
-                        this.setState({ tarefas });
-                    } else {
-                        console.warn(response);
-                    }
-                }).catch((ex) => {
-                    console.warn(ex);
-                })
-        }
-    }
-
     saveTarefa = (tarefa) => {
         if (!tarefa.id) {
             this.newTarefa(tarefa);
@@ -112,29 +95,6 @@ class TarefaPage extends Component {
             })
     }
 
-    onConcluidaChange = (tarefaId, concluida) => {
-
-        let method;
-        if (concluida) {
-            method = axios.put;
-        } else {
-            method = axios.delete;
-        }
-
-        method('/tarefas/' + tarefaId + "/concluida")
-            .then((response) => {
-                if (response.status === 204) {
-                    const { tarefas } = this.state;
-                    _.find(tarefas, { id: tarefaId }).concluida = concluida;
-                    this.setState({ tarefas });
-                } else {
-                    console.warn(response);
-                }
-            }).catch((ex) => {
-                console.warn(ex);
-            })
-    }
-
     render() {
         const { tarefas, showForm, tarefaSelecionada } = this.state;
         const closeForm = () => this.setState({ showForm: false });
@@ -147,7 +107,7 @@ class TarefaPage extends Component {
                     onClick={() => this.setState({ showForm: true, tarefaSelecionada: {} })}>Nova</Button>
 
                 <TarefaList tarefas={tarefas} onEditarClick={this.onEditarClick}
-                    onExcluirClick={this.onExcluirClick} onConcluidaChange={this.onConcluidaChange} />
+                    onExcluirClick={this.onExcluirClick} />
 
                 <TarefaForm container={this} show={showForm} onHide={closeForm}
                     onSave={this.saveTarefa} tarefa={tarefaSelecionada} />
