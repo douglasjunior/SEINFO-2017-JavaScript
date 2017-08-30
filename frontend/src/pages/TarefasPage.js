@@ -61,7 +61,9 @@ class TarefaPage extends Component {
             axios.delete('/tarefas/' + tarefaId)
                 .then((response) => {
                     if (response.status === 204) {
-                        return this.requestTarefas(this.textSearch);
+                        const { tarefas } = this.state;
+                        _.remove(tarefas, { id: tarefaId });
+                        this.setState({ tarefas });
                     } else {
                         console.warn(response);
                     }
