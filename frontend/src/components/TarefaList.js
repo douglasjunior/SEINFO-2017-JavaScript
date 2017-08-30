@@ -7,11 +7,11 @@ import TarefaItem from './TarefaItem';
 class TarefaList extends Component {
 
     render() {
-        const { tarefas, onEditarClick, onExcluirClick, onConcluidaChange } = this.props;
+        const { tarefas, onEditarClick, onConcluidaChange } = this.props;
 
         const tableItems = tarefas.map((tarefa, index) => {
             return <TarefaItem key={index} {...tarefa}
-                onEditarClick={onEditarClick} onExcluirClick={onExcluirClick} onConcluidaChange={onConcluidaChange} />
+                onEditarClick={onEditarClick} onConcluidaChange={onConcluidaChange} />
         })
 
         return (
