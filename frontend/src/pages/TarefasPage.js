@@ -72,7 +72,7 @@ class TarefaPage extends Component {
                     onClick={() => this.setState({ showForm: true, tarefaSelecionada: {} })}>Nova</Button>
 
                 <TarefaList tarefas={tarefas} onEditarClick={this.onEditarClick}
-                    onExcluirClick={this.onExcluirClick} onConcluidaChange={this.onConcluidaChange} />
+                    onExcluirClick={this.onExcluirClick} onConcluidaChange={() => {}} />
 
                 <TarefaForm container={this} show={showForm} onHide={closeForm}
                     onSave={this.saveTarefa} tarefa={tarefaSelecionada} />
