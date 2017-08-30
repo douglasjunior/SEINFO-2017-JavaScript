@@ -9,7 +9,7 @@ import moment from 'moment';
 class TarefaItem extends Component {
 
     render() {
-        const { id, titulo, data_criacao, concluida, onEditarClick } = this.props;
+        const { id, titulo, data_criacao, concluida  } = this.props;
         return (
             <tr>
                 <td>{id}</td>
@@ -27,7 +27,7 @@ class TarefaItem extends Component {
                 </td>
                 <td>
                     <ButtonGroup bsSize="small">
-                        <Button onClick={() => onEditarClick(id)} bsStyle="warning">Editar</Button>
+                        <Button onClick={() => {}} bsStyle="warning">Editar</Button>
                         <Button onClick={() => {}} bsStyle="danger">Excluir</Button>
                     </ButtonGroup>
                 </td>
