@@ -4,6 +4,7 @@ import {
     Button, ButtonGroup,
     ToggleButtonGroup, ToggleButton,
 } from 'react-bootstrap';
+import moment from 'moment';
 
 class TarefaItem extends Component {
 
@@ -20,7 +21,7 @@ class TarefaItem extends Component {
             <tr>
                 <td>{id}</td>
                 <td>{titulo}</td>
-                <td>{data_criacao}</td>
+                <td>{moment(data_criacao).format("DD/MM/YYYY HH:mm")}</td>
                 <td>
                     <ToggleButtonGroup
                         type="checkbox" bsSize="small"

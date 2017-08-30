@@ -124,7 +124,7 @@ class TarefaPage extends Component {
                 if (response.status === 204) {
                     const { tarefas } = this.state;
                     _.find(tarefas, { id: tarefaId }).concluida = concluida;
-                    this.setState({ showForm: false, tarefas });
+                    this.setState({ tarefas });
                 } else {
                     console.warn(response);
                 }
