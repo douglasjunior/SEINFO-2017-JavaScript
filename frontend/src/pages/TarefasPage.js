@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import _ from 'lodash';
 import axios from 'axios';
-import { Button } from 'react-bootstrap';
 
 import TarefaList from '../components/TarefaList';
 import TarefaSearch from '../components/TarefaSearch';
@@ -142,9 +141,6 @@ class TarefaPage extends Component {
             <section style={{ padding: 16 }}>
 
                 <TarefaSearch onSearchClick={this.onSearchClick} />
-
-                <Button bsStyle="success"
-                    onClick={() => this.setState({ showForm: true, tarefaSelecionada: {} })}>Nova</Button>
 
                 <TarefaList tarefas={tarefas} onEditarClick={this.onEditarClick}
                     onExcluirClick={this.onExcluirClick} onConcluidaChange={this.onConcluidaChange} />

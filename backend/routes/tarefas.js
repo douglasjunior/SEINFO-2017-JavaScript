@@ -61,24 +61,4 @@ router.get('/:tarefa_id', function (request, response, next) {
     .catch(next);
 });
 
-
-
-router.post('/', function (request, response, next) {
-    let dataAtual = moment()
-        .utc()
-        .toDate();
-
-    let tarefa = request.body;
-    tarefa.id = null;
-    tarefa.data_criacao = dataAtual;
-    tarefa.concluida = false;
-
-    Tarefa.create(tarefa)
-    .then((tarefa) => {
-        response.status(201)
-            .json(tarefa);
-    })
-    .catch(next);
-});
-
 module.exports = router;
