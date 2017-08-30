@@ -31,7 +31,7 @@ export default class TarefaItem extends Component {
                     <Divider />
 
                     <View style={styles.footer}>
-                        <Text style={styles.label}>Concluída</Text>
+                        <Text style={styles.label}>{concluida ? 'Concluída' : 'Pendente'}</Text>
 
                         <Switch value={concluida} onValueChange={(value) => onConcluidaChange(id, value)} />
                     </View>
