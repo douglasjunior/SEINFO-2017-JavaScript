@@ -8,13 +8,6 @@ import moment from 'moment';
 
 class TarefaItem extends Component {
 
-    onConcluidaChange = (toggleValues) => {
-        if (toggleValues && toggleValues.length > 0) {
-            const { id, onConcluidaChange } = this.props;
-            onConcluidaChange(id, toggleValues[1]);
-        }
-    }
-
     render() {
         const { id, titulo, data_criacao, concluida, onExcluirClick, onEditarClick } = this.props;
         return (
@@ -26,7 +19,7 @@ class TarefaItem extends Component {
                     <ToggleButtonGroup
                         type="checkbox" bsSize="small"
                         value={concluida}
-                        onChange={this.onConcluidaChange}
+                        onChange={() => {}}
                     >
                         <ToggleButton value={false}>Pendene</ToggleButton>
                         <ToggleButton value={true}>Concluída</ToggleButton>
