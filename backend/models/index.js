@@ -25,16 +25,15 @@ if (config.use_env_variable) {
     var sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 
-fs
-    .readdirSync(__dirname)
+fs.readdirSync(__dirname)
     .filter(function (file) {
         return (file.indexOf('.') !== 0) && (file !== basename) && (file.slice(-3) === '.js');
     })
     .forEach(function (file) {
-        let nome = file.slice(0, -3);
+        let fileName = file.slice(0, -3);
 
         var model = sequelize['import'](path.join(__dirname, file));
-        db[nome] = model;
+        db[fileName] = model;
     });
 
 Object.keys(db).forEach(function (modelName) {
