@@ -5,7 +5,6 @@ import axios from 'axios';
 
 import TarefaList from '../components/TarefaList';
 import TarefaSearch from '../components/TarefaSearch';
-import TarefaForm from '../components/TarefaForm';
 
 class TarefaPage extends Component {
 
@@ -80,21 +79,6 @@ class TarefaPage extends Component {
         }
     }
 
-    newTarefa = (tarefa) => {
-        axios.post('/tarefas/', tarefa)
-            .then((response) => {
-                if (response.status === 201) {
-                    const { tarefas } = this.state;
-                    tarefas.unshift(response.data);
-                    this.setState({ showForm: false, tarefas });
-                } else {
-                    console.warn(response);
-                }
-            }).catch((ex) => {
-                console.warn(ex);
-            })
-    }
-
     updateTarefa = (tarefa) => {
         axios.put('/tarefas/' + tarefa.id, tarefa)
             .then((response) => {
@@ -135,8 +119,7 @@ class TarefaPage extends Component {
     }
 
     render() {
-        const { tarefas, showForm, tarefaSelecionada } = this.state;
-        const closeForm = () => this.setState({ showForm: false });
+        const { tarefas } = this.state;
         return (
             <section style={{ padding: 16 }}>
 
@@ -144,9 +127,6 @@ class TarefaPage extends Component {
 
                 <TarefaList tarefas={tarefas} onEditarClick={this.onEditarClick}
                     onExcluirClick={this.onExcluirClick} onConcluidaChange={this.onConcluidaChange} />
-
-                <TarefaForm container={this} show={showForm} onHide={closeForm}
-                    onSave={this.saveTarefa} tarefa={tarefaSelecionada} />
 
             </section>
         )
