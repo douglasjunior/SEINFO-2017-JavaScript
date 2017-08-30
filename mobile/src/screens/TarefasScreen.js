@@ -5,6 +5,8 @@ import {
     View,
     Button,
 } from 'react-native';
+
+import _ from 'lodash';
 import axios from 'axios';
 
 import Divider from '../components/Divider';
@@ -58,7 +60,25 @@ export default class TarefasScreen extends Component {
     }
 
     onConcluidaChange = (tarefa, concluida) => {
-        
+        let method;
+        if (concluida) {
+            method = axios.put;
+        } else {
+            method = axios.delete;
+        }
+
+        method('/tarefas/' + tarefa.id + "/concluida")
+            .then((response) => {
+                if (response.status === 204) {
+                    const { tarefas } = this.state;
+                    _.find(tarefas, { id: tarefa.id }).concluida = concluida;
+                    this.setState({ tarefas });
+                } else {
+                    console.warn(response);
+                }
+            }).catch((ex) => {
+                console.warn(ex);
+            })
     }
 
     render() {
