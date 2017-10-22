@@ -1,6 +1,6 @@
 # SEINFO-2017 JavaScript
 
-Projeto do minicruso de Desenvolvimento Full-stack com JavaScript da [SEINFO 2017](http://seinfo.cm.utfpr.edu.br/) 
+Projeto do minicurso de Desenvolvimento Full-stack com JavaScript da [SEINFO 2017](http://seinfo.cm.utfpr.edu.br/) 
 
 ## Conteúdo
 * Apresentação
